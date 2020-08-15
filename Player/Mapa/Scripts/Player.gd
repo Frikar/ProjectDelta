@@ -14,8 +14,8 @@ func _process(delta):
 	
 	#Evita que el jugador no se salga de la ventana
 	#(esta funcion no se usara luego, es ahora por comodidad)
-	position.x = clamp(position.x, 0, 480)
-	position.y = clamp(position.y, 0, 288)
+	position.x = clamp(position.x, 0, 544)
+	position.y = clamp(position.y, 0, 352)
 
 
 func _movimiento(delta):
