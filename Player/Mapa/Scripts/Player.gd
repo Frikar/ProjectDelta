@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
-var velocidad = 120
+var velocidad = 110
 var movimiento = Vector2()
 
 
 func _ready():
+	$Sprite.frame = 3
 	pass # Replace with function body.
 
 func _process(delta):
