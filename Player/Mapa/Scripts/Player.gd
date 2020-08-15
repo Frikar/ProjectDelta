@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var velocidad = 110
 var movimiento = Vector2()
-
+var relacion = 0
 
 func _ready():
 	$Sprite.frame = 3
