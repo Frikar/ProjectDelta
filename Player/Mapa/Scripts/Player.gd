@@ -5,14 +5,14 @@ var movimiento = Vector2()
 var relacion = 0
 
 func _ready():
+	#Hace que Player spawnee mirando hacia abajo
 	$Sprite.frame = 3
-	pass # Replace with function body.
 
 func _process(delta):
 	
 	_movimiento(delta)
 	
-	#Evita que el jugador no se salga de la ventana
+	#Evita que el jugador se salga de la ventana
 	#(esta funcion no se usara luego, es ahora por comodidad)
 	position.x = clamp(position.x, 0, 544)
 	position.y = clamp(position.y, 0, 352)
@@ -81,4 +81,4 @@ func _movimiento(delta):
 		movimiento = movimiento.normalized() * velocidad
 	
 	#Modificando posicion
-	position += movimiento * delta
+	movimiento += move_and_slide(movimiento)
