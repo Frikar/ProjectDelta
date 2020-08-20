@@ -9,3 +9,4 @@ addons/
 .mono/
 .github/
 data_*/
+.idea

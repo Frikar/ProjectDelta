@@ -89,42 +89,43 @@ func _movimiento(delta):
 	movimiento += move_and_slide(movimiento)
 
 func _dialogoNPC():
-	if(get_slide_collision(get_slide_count() - 1) != null):
-		var obj_colisionado = get_slide_collision(get_slide_count() - 1).collider
-		if(Input.is_action_just_pressed("INTERACTUAR") && obj_colisionado.is_in_group("NPC") && estadoDialogo == false && cooldownInteractuar == false):
-			
-			
-			#Detienen la animacion de caminar
-			if $Sprite.frame == 1 || $Sprite.frame == 2:
-				$AnimationPlayer.stop()
-				$Sprite.frame = 0
-				
-			if $Sprite.frame == 4 || $Sprite.frame == 5:
-				$AnimationPlayer.stop()
-				$Sprite.frame = 3
-			
-			if $Sprite.frame == 7 || $Sprite.frame == 8:
-				$AnimationPlayer.stop()
-				$Sprite.frame = 6
-			
-			if $Sprite.frame == 10 || $Sprite.frame == 11:
-				$AnimationPlayer.stop()
-				$Sprite.frame = 9
-			
-			
-			var cuadro = cuadroTexto.instance()
-			get_parent().add_child(cuadro)
-			estadoDialogo = true
-			cooldownInteractuar = true
-			$AnimationPlayer.stop()
-			var controlador = 0
-			
-			while controlador < obj_colisionado.texto.size():
-				cuadro.get_node("Label").text = obj_colisionado.texto[controlador]
-				controlador += 1
-				yield(self,"interactuando")
-				
-			estadoDialogo = false
-			get_parent().remove_child(cuadro)
-			yield(get_tree().create_timer(0.1),"timeout")
-			cooldownInteractuar = false
+    if(get_slide_count() > 0):
+        if(get_slide_collision(get_slide_count() - 1) != null):
+            var obj_colisionado = get_slide_collision(get_slide_count() - 1).collider
+            if(Input.is_action_just_pressed("INTERACTUAR") && obj_colisionado.is_in_group("NPC") && estadoDialogo == false && cooldownInteractuar == false):
+                
+                
+                #Detienen la animacion de caminar
+                if $Sprite.frame == 1 || $Sprite.frame == 2:
+                    $AnimationPlayer.stop()
+                    $Sprite.frame = 0
+                    
+                if $Sprite.frame == 4 || $Sprite.frame == 5:
+                    $AnimationPlayer.stop()
+                    $Sprite.frame = 3
+                
+                if $Sprite.frame == 7 || $Sprite.frame == 8:
+                    $AnimationPlayer.stop()
+                    $Sprite.frame = 6
+                
+                if $Sprite.frame == 10 || $Sprite.frame == 11:
+                    $AnimationPlayer.stop()
+                    $Sprite.frame = 9
+                
+                
+                var cuadro = cuadroTexto.instance()
+                get_parent().add_child(cuadro)
+                estadoDialogo = true
+                cooldownInteractuar = true
+                $AnimationPlayer.stop()
+                var controlador = 0
+                
+                while controlador < obj_colisionado.texto.size():
+                    cuadro.get_node("Label").text = obj_colisionado.texto[controlador]
+                    controlador += 1
+                    yield(self,"interactuando")
+                    
+                estadoDialogo = false
+                get_parent().remove_child(cuadro)
+                yield(get_tree().create_timer(0.1),"timeout")
+                cooldownInteractuar = false
