@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Tilesets/Colision Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Tilesets/Tileset1.tres" type="TileSet" id=1]
 [ext_resource path="res://Player/Mapa/Scripts/Player.gd" type="Script" id=2]
-[ext_resource path="res://Player/Mapa/Sprites/sprite_sheet_prota_64.png" type="Texture" id=3]
+[ext_resource path="res://Otros/CuadroDeTexto.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Mapa/Sprites/sprite_sheet_prota_64.png" type="Texture" id=4]
+[ext_resource path="res://Mapas/Scripts/NPCTest.gd" type="Script" id=5]
+[ext_resource path="res://icon.png" type="Texture" id=6]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12.7037, 27.3704 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
+resource_name = "caminandoAbajo"
 length = 0.8
 loop = true
 step = 0.2
@@ -24,7 +28,8 @@ tracks/0/keys = {
 "values": [ 4, 3, 5, 3 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
+resource_name = "caminandoArriba"
 length = 0.8
 loop = true
 step = 0.2
@@ -41,7 +46,8 @@ tracks/0/keys = {
 "values": [ 10, 9, 11, 9 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
+resource_name = "caminandoDerecha"
 length = 0.8
 loop = true
 step = 0.2
@@ -58,7 +64,8 @@ tracks/0/keys = {
 "values": [ 1, 0, 2, 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
+resource_name = "caminandoIzquierda"
 length = 0.8
 loop = true
 step = 0.2
@@ -75,6 +82,9 @@ tracks/0/keys = {
 "values": [ 7, 6, 8, 6 ]
 }
 
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 15.6711, 15.6667 )
+
 [node name="Test Room" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -82,7 +92,7 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 collision_use_kinematic = true
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 2, 0, 65536, 10, 0, 65537, 6, 0, 65538, 6, 0, 65539, 6, 0, 65540, 6, 0, 65541, 6, 0, 65542, 6, 0, 65543, 6, 0, 65544, 6, 0, 65545, 6, 0, 65546, 6, 0, 65547, 6, 0, 65548, 6, 0, 65549, 6, 0, 65550, 6, 0, 65551, 6, 0, 65552, 14, 0, 131072, 10, 0, 131073, 7, 0, 131074, 7, 0, 131075, 7, 0, 131076, 7, 0, 131077, 7, 0, 131078, 7, 0, 131079, 7, 0, 131080, 7, 0, 131081, 7, 0, 131082, 7, 0, 131083, 7, 0, 131084, 7, 0, 131085, 7, 0, 131086, 7, 0, 131087, 7, 0, 131088, 14, 0, 196608, 10, 0, 196609, 5, 0, 196610, 5, 0, 196611, 5, 0, 196612, 5, 0, 196613, 5, 0, 196614, 5, 0, 196615, 5, 0, 196616, 5, 0, 196617, 5, 0, 196618, 5, 0, 196619, 5, 0, 196620, 5, 0, 196621, 5, 0, 196622, 5, 0, 196623, 5, 0, 196624, 14, 0, 262144, 10, 0, 262145, 5, 0, 262146, 5, 0, 262147, 5, 0, 262148, 5, 0, 262149, 5, 0, 262150, 5, 0, 262151, 5, 0, 262152, 5, 0, 262153, 5, 0, 262154, 5, 0, 262155, 5, 0, 262156, 5, 0, 262157, 5, 0, 262158, 5, 0, 262159, 5, 0, 262160, 14, 0, 327680, 10, 0, 327681, 5, 0, 327682, 5, 0, 327683, 5, 0, 327684, 5, 0, 327685, 5, 0, 327686, 5, 0, 327687, 5, 0, 327688, 5, 0, 327689, 5, 0, 327690, 5, 0, 327691, 5, 0, 327692, 5, 0, 327693, 5, 0, 327694, 5, 0, 327695, 5, 0, 327696, 14, 0, 393216, 10, 0, 393217, 5, 0, 393218, 5, 0, 393219, 5, 0, 393220, 5, 0, 393221, 5, 0, 393222, 5, 0, 393223, 5, 0, 393224, 5, 0, 393225, 5, 0, 393226, 5, 0, 393227, 5, 0, 393228, 5, 0, 393229, 5, 0, 393230, 5, 0, 393231, 5, 0, 393232, 14, 0, 458752, 10, 0, 458753, 5, 0, 458754, 5, 0, 458755, 5, 0, 458756, 5, 0, 458757, 5, 0, 458758, 5, 0, 458759, 5, 0, 458760, 5, 0, 458761, 5, 0, 458762, 5, 0, 458763, 5, 0, 458764, 5, 0, 458765, 5, 0, 458766, 5, 0, 458767, 5, 0, 458768, 14, 0, 524288, 10, 0, 524289, 5, 0, 524290, 5, 0, 524291, 5, 0, 524292, 5, 0, 524293, 5, 0, 524294, 5, 0, 524295, 5, 0, 524296, 5, 0, 524297, 5, 0, 524298, 5, 0, 524299, 5, 0, 524300, 5, 0, 524301, 5, 0, 524302, 5, 0, 524303, 5, 0, 524304, 14, 0, 589824, 10, 0, 589825, 5, 0, 589826, 5, 0, 589827, 5, 0, 589828, 5, 0, 589829, 5, 0, 589830, 5, 0, 589831, 5, 0, 589832, 5, 0, 589833, 5, 0, 589834, 5, 0, 589835, 5, 0, 589836, 5, 0, 589837, 5, 0, 589838, 5, 0, 589839, 5, 0, 589840, 14, 0, 655360, 11, 0, 655361, 12, 0, 655362, 12, 0, 655363, 12, 0, 655364, 12, 0, 655365, 12, 0, 655366, 12, 0, 655367, 12, 0, 655368, 12, 0, 655369, 12, 0, 655370, 12, 0, 655371, 12, 0, 655372, 12, 0, 655373, 12, 0, 655374, 12, 0, 655375, 12, 0, 655376, 13, 0 )
+tile_data = PoolIntArray( 65537, 14, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, 3, 0, 131073, 6, 0, 131074, 15, 0, 131075, 15, 0, 131076, 15, 0, 131077, 15, 0, 131078, 15, 0, 131079, 15, 0, 131080, 15, 0, 131081, 15, 0, 131082, 15, 0, 131083, 15, 0, 131084, 15, 0, 131085, 15, 0, 131086, 15, 0, 131087, 12, 0, 196609, 6, 0, 196610, 9, 0, 196611, 9, 0, 196612, 9, 0, 196613, 9, 0, 196614, 9, 0, 196615, 9, 0, 196616, 9, 0, 196617, 9, 0, 196618, 9, 0, 196619, 9, 0, 196620, 9, 0, 196621, 9, 0, 196622, 9, 0, 196623, 2, 0, 262145, 6, 0, 262146, 13, 0, 262147, 13, 0, 262148, 13, 0, 262149, 13, 0, 262150, 13, 0, 262151, 13, 0, 262152, 13, 0, 262153, 13, 0, 262154, 13, 0, 262155, 13, 0, 262156, 13, 0, 262157, 13, 0, 262158, 13, 0, 262159, 2, 0, 327681, 6, 0, 327682, 13, 0, 327683, 13, 0, 327684, 13, 0, 327685, 13, 0, 327686, 13, 0, 327687, 13, 0, 327688, 13, 0, 327689, 13, 0, 327690, 13, 0, 327691, 13, 0, 327692, 13, 0, 327693, 13, 0, 327694, 13, 0, 327695, 2, 0, 393217, 6, 0, 393218, 13, 0, 393219, 13, 0, 393220, 13, 0, 393221, 13, 0, 393222, 13, 0, 393223, 13, 0, 393224, 13, 0, 393225, 13, 0, 393226, 13, 0, 393227, 13, 0, 393228, 13, 0, 393229, 13, 0, 393230, 13, 0, 393231, 2, 0, 458753, 6, 0, 458754, 13, 0, 458755, 13, 0, 458756, 13, 0, 458757, 13, 0, 458758, 13, 0, 458759, 13, 0, 458760, 13, 0, 458761, 13, 0, 458762, 13, 0, 458763, 13, 0, 458764, 13, 0, 458765, 13, 0, 458766, 13, 0, 458767, 2, 0, 524289, 6, 0, 524290, 13, 0, 524291, 13, 0, 524292, 13, 0, 524293, 13, 0, 524294, 13, 0, 524295, 13, 0, 524296, 13, 0, 524297, 13, 0, 524298, 13, 0, 524299, 13, 0, 524300, 13, 0, 524301, 13, 0, 524302, 13, 0, 524303, 2, 0, 589825, 11, 0, 589826, 8, 0, 589827, 8, 0, 589828, 8, 0, 589829, 8, 0, 589830, 8, 0, 589831, 8, 0, 589832, 8, 0, 589833, 8, 0, 589834, 8, 0, 589835, 8, 0, 589836, 8, 0, 589837, 8, 0, 589838, 8, 0, 589839, 5, 0 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 271.71, 175.728 )
@@ -90,20 +100,38 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+cuadroTexto = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 position = Vector2( 1.84406, 4.61235 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 vframes = 4
 hframes = 3
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( -0.888885, 4.75482 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
-anims/caminandoAbajo = SubResource( 4 )
-anims/caminandoArriba = SubResource( 5 )
-anims/caminandoDerecha = SubResource( 6 )
-anims/caminandoIzquierda = SubResource( 7 )
+anims/caminandoAbajo = SubResource( 2 )
+anims/caminandoArriba = SubResource( 3 )
+anims/caminandoDerecha = SubResource( 4 )
+anims/caminandoIzquierda = SubResource( 5 )
+
+[node name="NPCTest" type="StaticBody2D" parent="." groups=[
+"NPC",
+]]
+position = Vector2( 368.127, 175.803 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+texto = [ "", "kionda" ]
+
+[node name="Sprite" type="Sprite" parent="NPCTest"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPCTest"]
+shape = SubResource( 6 )

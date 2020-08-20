@@ -2,7 +2,14 @@ extends KinematicBody2D
 
 var velocidad = 110
 var movimiento = Vector2()
+var estadoDialogo = false
+var cooldownInteractuar = false
 var relacion = 0
+
+
+signal interactuando
+
+export (PackedScene) var cuadroTexto
 
 func _ready():
 	#Hace que Player spawnee mirando hacia abajo
@@ -10,12 +17,14 @@ func _ready():
 
 func _process(delta):
 	
-	_movimiento(delta)
+	if Input.is_action_just_pressed("INTERACTUAR"):
+		emit_signal("interactuando")
 	
-	#Evita que el jugador se salga de la ventana
-	#(esta funcion no se usara luego, es ahora por comodidad)
-	position.x = clamp(position.x, 0, 544)
-	position.y = clamp(position.y, 0, 352)
+	if estadoDialogo == false:
+		_movimiento(delta)
+		
+	_dialogoNPC()
+	
 
 
 func _movimiento(delta):
@@ -30,10 +39,9 @@ func _movimiento(delta):
 		
 	
 	#El jugador suelta el boton, y el personaje se detiene
-	if Input.is_action_just_released("ui_right"):
-		if movimiento.y == 0:
-			$AnimationPlayer.stop()
-			$Sprite.frame = 0
+	if Input.is_action_just_released("ui_right") &&  movimiento.y == 0:
+		$AnimationPlayer.stop()
+		$Sprite.frame = 0
 		
 	
 	#Movimiento y animacion hacia la izquierda
@@ -43,10 +51,9 @@ func _movimiento(delta):
 			$AnimationPlayer.play("caminandoIzquierda")
 		
 	#El jugador suelta el boton, y el personaje se detiene
-	if Input.is_action_just_released("ui_left"):
-		if movimiento.y == 0:
-			$AnimationPlayer.stop()
-			$Sprite.frame = 6
+	if Input.is_action_just_released("ui_left") &&  movimiento.y == 0:
+		$AnimationPlayer.stop()
+		$Sprite.frame = 6
 	
 	
 	#Movimiento y animacion hacia abajo
@@ -56,10 +63,9 @@ func _movimiento(delta):
 			$AnimationPlayer.play("caminandoAbajo")
 	
 	#El jugador suelta el boton, y el personaje se detiene
-	if Input.is_action_just_released("ui_down"):
-		if movimiento.x == 0:
-			$AnimationPlayer.stop()
-			$Sprite.frame = 3
+	if Input.is_action_just_released("ui_down") && movimiento.x == 0:
+		$AnimationPlayer.stop()
+		$Sprite.frame = 3
 	
 	
 	#Movimiento y animacion hacia arriba
@@ -69,10 +75,9 @@ func _movimiento(delta):
 			$AnimationPlayer.play("caminandoArriba")
 	
 	#El jugador suelta el boton, y el personaje se detiene
-	if Input.is_action_just_released("ui_up"):
-		if movimiento.x == 0:
-			$AnimationPlayer.stop()
-			$Sprite.frame = 9
+	if Input.is_action_just_released("ui_up") && movimiento.x == 0:
+		$AnimationPlayer.stop()
+		$Sprite.frame = 9
 	
 	
 	#Soluciona un bug para que el jugador no vaya más rapido
@@ -82,3 +87,44 @@ func _movimiento(delta):
 	
 	#Modificando posicion
 	movimiento += move_and_slide(movimiento)
+
+func _dialogoNPC():
+	if(get_slide_collision(get_slide_count() - 1) != null):
+		var obj_colisionado = get_slide_collision(get_slide_count() - 1).collider
+		if(Input.is_action_just_pressed("INTERACTUAR") && obj_colisionado.is_in_group("NPC") && estadoDialogo == false && cooldownInteractuar == false):
+			
+			
+			#Detienen la animacion de caminar
+			if $Sprite.frame == 1 || $Sprite.frame == 2:
+				$AnimationPlayer.stop()
+				$Sprite.frame = 0
+				
+			if $Sprite.frame == 4 || $Sprite.frame == 5:
+				$AnimationPlayer.stop()
+				$Sprite.frame = 3
+			
+			if $Sprite.frame == 7 || $Sprite.frame == 8:
+				$AnimationPlayer.stop()
+				$Sprite.frame = 6
+			
+			if $Sprite.frame == 10 || $Sprite.frame == 11:
+				$AnimationPlayer.stop()
+				$Sprite.frame = 9
+			
+			
+			var cuadro = cuadroTexto.instance()
+			get_parent().add_child(cuadro)
+			estadoDialogo = true
+			cooldownInteractuar = true
+			$AnimationPlayer.stop()
+			var controlador = 0
+			
+			while controlador < obj_colisionado.texto.size():
+				cuadro.get_node("Label").text = obj_colisionado.texto[controlador]
+				controlador += 1
+				yield(self,"interactuando")
+				
+			estadoDialogo = false
+			get_parent().remove_child(cuadro)
+			yield(get_tree().create_timer(0.1),"timeout")
+			cooldownInteractuar = false
